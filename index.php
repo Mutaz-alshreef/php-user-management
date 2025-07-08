@@ -3,13 +3,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
     <title>User Form</title>
+    <link rel="stylesheet" href="style.css">
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 30px;
+            background-color: #f9f9f9;
         }
         form input, form button {
             padding: 5px;
@@ -18,12 +19,15 @@
         table {
             margin-top: 20px;
             border-collapse: collapse;
-            width: 60%;
+            width: 80%;
         }
         th, td {
             padding: 8px 12px;
             border: 1px solid #000;
             text-align: center;
+        }
+        th {
+            background-color: #e8e8e8;
         }
     </style>
 </head>
@@ -37,23 +41,30 @@
 </form>
 
 <?php
-// إضافة البيانات
+// إدخال البيانات إلى قاعدة البيانات
 if (isset($_POST['submit'])) {
-    $name = $_POST['name'];
-    $age = $_POST['age'];
+    $name = $conn->real_escape_string($_POST['name']);
+    $age = (int)$_POST['age'];
     $conn->query("INSERT INTO user (name, age) VALUES ('$name', $age)");
 }
 
-// عرض البيانات
+// جلب البيانات من قاعدة البيانات
 $result = $conn->query("SELECT * FROM user");
 
 echo "<table>
-<tr><th>Name</th><th>Age</th><th>Status</th><th>Toggle</th></tr>";
+<tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Age</th>
+    <th>Status</th>
+    <th>Toggle</th>
+</tr>";
 
 if ($result && $result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
         $status = $row['status'] ? 'ON' : 'OFF';
         echo "<tr>
+                <td>{$row['id']}</td>
                 <td>{$row['name']}</td>
                 <td>{$row['age']}</td>
                 <td id='status-{$row['id']}'>$status</td>
@@ -61,7 +72,7 @@ if ($result && $result->num_rows > 0) {
               </tr>";
     }
 } else {
-    echo "<tr><td colspan='4'>No records found</td></tr>";
+    echo "<tr><td colspan='5'>No records found</td></tr>";
 }
 
 echo "</table>";
