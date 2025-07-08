@@ -62,6 +62,11 @@ CREATE TABLE user (
 
 ---
 
+## Pic 📸
+![image](https://github.com/user-attachments/assets/bedad006-b29b-438d-9bda-dd207fc511e5)
+
+![image](https://github.com/user-attachments/assets/2eaaa933-ccae-4bcb-acf2-20fdd808a164)
+
 ## 🧪 Example Use
 
 - Input: `Name = Ali`, `Age = 25`
